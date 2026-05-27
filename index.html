@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback — Dr. Johnna</title>
+  <meta name="description" content="Share your reflection. Two minutes, no wrong answers.">
+
+  <!-- Fonts: DM Serif Display (Google) + Switzer (Fontshare) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Brand tokens ---------- */
+    :root {
+      --bg: #FEFCF9;
+      --text: #202020;
+      --accent: #53C5B3;
+      --muted: rgba(32, 32, 32, 0.6);
+      --border: rgba(32, 32, 32, 0.125);
+      --border-faint: rgba(32, 32, 32, 0.0625);
+      --focus-ring: rgba(83, 197, 179, 0.25);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Switzer', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: color 0.12s;
+    }
+    a:hover { color: var(--accent); }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      border-bottom: 1px solid var(--border-faint);
+      padding: 24px;
+    }
+    .site-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .wordmark {
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    @media (min-width: 768px) {
+      .site-header { padding: 32px; }
+    }
+
+    /* ---------- Main ---------- */
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    @media (min-width: 768px) {
+      main { padding: 72px 32px 96px; }
+    }
+
+    /* ---------- Hero ---------- */
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 1.15;
+      margin: 0 0 24px;
+      letter-spacing: -0.01em;
+    }
+    h1 .accent {
+      font-style: italic;
+      color: var(--accent);
+    }
+    @media (min-width: 768px) {
+      h1 { font-size: 56px; }
+    }
+
+    .subhead {
+      font-size: 17px;
+      color: var(--text);
+      margin: 0 0 32px;
+      line-height: 1.55;
+    }
+
+    .separator {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0 40px;
+    }
+
+    /* ---------- Form ---------- */
+    form { margin: 0; }
+
+    .field { margin-bottom: 32px; }
+
+    .field-label {
+      display: block;
+      font-weight: 500;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .helper {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      font-family: var(--sans);
+      font-size: 16px;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.5;
+      font-family: var(--sans);
+    }
+
+    /* ---------- Star rating ---------- */
+    .stars {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .star {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      font-size: 36px;
+      line-height: 1;
+      color: rgba(32, 32, 32, 0.22);
+      transition: color 0.12s, transform 0.08s;
+      font-family: inherit;
+      border-radius: 4px;
+    }
+    .star.filled { color: var(--text); }
+    .star:hover { transform: scale(1.08); }
+    .star:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+
+    /* ---------- Recommendation buttons ---------- */
+    .choice-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .choice {
+      background: var(--bg);
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 16px 20px;
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+    }
+    .choice:hover { background: rgba(32, 32, 32, 0.04); }
+    .choice.active {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .choice:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+
+    /* ---------- Custom checkbox ---------- */
+    .checkbox-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      padding: 4px 0;
+      position: relative;
+    }
+    .checkbox-field input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+    .checkbox-box {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--text);
+      border-radius: 4px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      transition: background 0.12s, box-shadow 0.12s;
+      position: relative;
+    }
+    .checkbox-field input:checked + .checkbox-box {
+      background: var(--text);
+    }
+    .checkbox-field input:checked + .checkbox-box::after {
+      content: '';
+      width: 5px;
+      height: 10px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(0, -1px);
+    }
+    .checkbox-field input:focus-visible + .checkbox-box {
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+    .checkbox-label {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* ---------- Honeypot ---------- */
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ---------- Submit ---------- */
+    .submit-row { margin-top: 40px; }
+    .submit {
+      width: 100%;
+      background: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--text);
+      padding: 16px 28px;
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.12s, transform 0.05s;
+    }
+    .submit:hover:not(:disabled) { opacity: 0.92; }
+    .submit:active:not(:disabled) { transform: translateY(1px); }
+    .submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .submit:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+    @media (min-width: 640px) {
+      .submit-row { display: flex; justify-content: flex-end; }
+      .submit { width: auto; }
+    }
+
+    .submit-helper {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 12px 0 0;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .submit-helper { text-align: right; }
+    }
+
+    .error-msg {
+      background: rgba(32, 32, 32, 0.04);
+      border-left: 2px solid var(--text);
+      padding: 12px 16px;
+      margin: 0 0 16px;
+      font-size: 15px;
+      border-radius: 0 4px 4px 0;
+    }
+    .error-msg[hidden] { display: none; }
+
+    /* ---------- Thank-you state ---------- */
+    .thanks { display: none; }
+    .thanks.show { display: block; }
+
+    .pull-quote {
+      font-style: italic;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 4px 0 4px 16px;
+      border-left: 2px solid var(--border);
+      margin: 24px 0 80px;
+      font-family: var(--sans);
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .post-quote-body {
+      font-size: 16px;
+      margin: 0 0 16px;
+    }
+
+    .thanks-links {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+    }
+    .thanks-links li {
+      margin: 0;
+      padding: 6px 0;
+    }
+    .thanks-links a {
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 400;
+      transition: color 0.12s;
+    }
+    .thanks-links a:hover { color: var(--accent); }
+
+    /* ---------- Footer ---------- */
+    .site-footer {
+      margin-top: 96px;
+      border-top: 1px solid var(--border-faint);
+      padding: 32px 24px;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .footer-bottom {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+    .footer-dot {
+      margin: 0 8px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="https://doctorjohnna.com" class="wordmark">DR. JOHNNA</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ FORM VIEW ============ -->
+    <section id="form-view">
+      <p class="eyebrow">Feedback Form</p>
+      <h1>Your <span class="accent">Reflection.</span></h1>
+      <p class="subhead">Thank you for showing up and doing the work. Your reflection shapes what comes next. About two minutes. Full honesty welcome.</p>
+      <hr class="separator">
+
+      <form id="feedback-form" novalidate>
+        <!-- Hidden fields tag every submission so you can filter by training in Formspree / Sheets.
+             URL parameter ?t=<slug> sets both fields. Defaults to "general". -->
+        <input type="hidden" name="training_slug" id="training_slug" value="general">
+        <input type="hidden" name="training_name" id="training_name" value="general">
+        <input type="hidden" name="_subject" id="_subject" value="New feedback: general">
+
+        <!-- Honeypot -->
+        <div class="honeypot" aria-hidden="true">
+          <label for="hp">Don't fill this out</label>
+          <input type="text" id="hp" name="_gotcha" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- 1. Star rating -->
+        <div class="field">
+          <span class="field-label" id="rating-label">How would you rate your experience with Dr. Johnna?</span>
+          <div class="stars" role="radiogroup" aria-labelledby="rating-label">
+            <button type="button" class="star" role="radio" aria-checked="false" data-value="1" aria-label="1 star">&#9733;</button>
+            <button type="button" class="star" role="radio" aria-checked="false" data-value="2" aria-label="2 stars">&#9733;</button>
+            <button type="button" class="star" role="radio" aria-checked="false" data-value="3" aria-label="3 stars">&#9733;</button>
+            <button type="button" class="star" role="radio" aria-checked="false" data-value="4" aria-label="4 stars">&#9733;</button>
+            <button type="button" class="star" role="radio" aria-checked="false" data-value="5" aria-label="5 stars">&#9733;</button>
+          </div>
+          <input type="hidden" name="rating" id="rating" value="">
+        </div>
+
+        <!-- 2. Recommend -->
+        <div class="field">
+          <span class="field-label" id="rec-label">Would you recommend this to another founder or organization?</span>
+          <div class="choice-group" role="radiogroup" aria-labelledby="rec-label">
+            <button type="button" class="choice" data-value="Yes" role="radio" aria-checked="false">Yes</button>
+            <button type="button" class="choice" data-value="Not yet" role="radio" aria-checked="false">Not yet</button>
+          </div>
+          <input type="hidden" name="recommend" id="recommend" value="">
+        </div>
+
+        <!-- 3. Shifted -->
+        <div class="field">
+          <label class="field-label" for="shifted">What has shifted for you?</label>
+          <p class="helper">Before and after, in your own words.</p>
+          <textarea id="shifted" name="shifted" rows="4" required></textarea>
+        </div>
+
+        <!-- 4. Most valuable -->
+        <div class="field">
+          <label class="field-label" for="valuable">What was most valuable to you?</label>
+          <p class="helper">The specific part that landed.</p>
+          <textarea id="valuable" name="valuable" rows="4" required></textarea>
+        </div>
+
+        <!-- 5. Improvements -->
+        <div class="field">
+          <label class="field-label" for="improvements">What would have made it even better?</label>
+          <p class="helper">Honest is helpful. This is how the work gets sharper.</p>
+          <textarea id="improvements" name="improvements" rows="3"></textarea>
+        </div>
+
+        <!-- 6. Anything else -->
+        <div class="field">
+          <label class="field-label" for="anything_else">Anything else you'd like to share?</label>
+          <textarea id="anything_else" name="anything_else" rows="3"></textarea>
+        </div>
+
+        <!-- 7. Permission -->
+        <div class="field">
+          <label class="checkbox-field">
+            <input type="checkbox" name="share_permission" value="Yes">
+            <span class="checkbox-box"></span>
+            <span class="checkbox-label">I'm open to Dr. Johnna sharing my words publicly, with my first name.</span>
+          </label>
+        </div>
+
+        <!-- 7. Name -->
+        <div class="field">
+          <label class="field-label" for="name">Name</label>
+          <p class="helper">Optional</p>
+          <input type="text" id="name" name="name" autocomplete="given-name">
+        </div>
+
+        <!-- 8. Email -->
+        <div class="field">
+          <label class="field-label" for="email">Email</label>
+          <p class="helper">Optional</p>
+          <input type="email" id="email" name="email" autocomplete="email">
+        </div>
+
+        <!-- Error region -->
+        <div class="error-msg" id="error-msg" role="alert" aria-live="polite" hidden></div>
+
+        <!-- Submit -->
+        <div class="submit-row">
+          <button type="submit" class="submit" id="submit-btn">Send my reflection +</button>
+        </div>
+        <p class="submit-helper">Thank you!</p>
+      </form>
+    </section>
+
+    <!-- ============ THANK-YOU VIEW ============ -->
+    <section id="thanks-view" class="thanks" aria-live="polite">
+      <h1>Thank you. <br><span class="accent">Truly.</span></h1>
+      <blockquote class="pull-quote">Your words shape what this work becomes. If you left your email, I may reach out personally.</blockquote>
+      <p class="post-quote-body">In the meantime, a few things that might serve you.</p>
+
+      <ul class="thanks-links">
+        <li><a href="https://doctorjohnna.com">Visit the site &#8599;</a></li>
+        <li><a href="https://capacity.drjohnna.co">Find your Hidden Capacity &#8599;</a></li>
+        <li><a href="https://brandstudio.drjohnna.co">Join the free membership &#8599;</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        &copy; 2026 Dr. Johnna Consulting LLC<span class="footer-dot">&middot;</span><a href="https://doctorjohnna.com">doctorjohnna.com</a><span class="footer-dot">&middot;</span><a href="https://www.doctorjohnna.com/privacy">Privacy</a><span class="footer-dot">&middot;</span><a href="https://www.doctorjohnna.com/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Formspree endpoint for this form (xlgvaneb)
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgvaneb';
+
+    // Open every external link (anything starting with http) in a new tab.
+    // Covers the header wordmark, footer, and thank-you page links.
+    document.querySelectorAll('a[href^="http"]').forEach(a => {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    });
+
+    // Capture ?t= URL parameter and stamp it onto the hidden fields so each
+    // submission is tagged by training. Visible copy never varies.
+    (function captureTrainingSlug() {
+      const params = new URLSearchParams(window.location.search);
+      const raw = (params.get('t') || 'general').toString();
+      const slug = raw.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80) || 'general';
+      document.getElementById('training_slug').value = slug;
+      document.getElementById('training_name').value = slug;
+      document.getElementById('_subject').value = 'New feedback: ' + slug;
+    })();
+
+    // ---------- Star rating ----------
+    const stars = Array.from(document.querySelectorAll('.star'));
+    const ratingInput = document.getElementById('rating');
+
+    function setRating(value) {
+      ratingInput.value = String(value);
+      stars.forEach((s, i) => {
+        const val = i + 1;
+        s.classList.toggle('filled', val <= value);
+        s.setAttribute('aria-checked', val === value ? 'true' : 'false');
+        s.tabIndex = val === value ? 0 : -1;
+      });
+    }
+
+    stars.forEach((star, idx) => {
+      star.addEventListener('click', () => setRating(idx + 1));
+      star.addEventListener('keydown', (e) => {
+        const current = parseInt(ratingInput.value) || 0;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const next = Math.min(5, current + 1) || 1;
+          setRating(next);
+          stars[next - 1].focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const prev = Math.max(1, (current || 2) - 1);
+          setRating(prev);
+          stars[prev - 1].focus();
+        } else if (e.key >= '1' && e.key <= '5') {
+          e.preventDefault();
+          const v = parseInt(e.key);
+          setRating(v);
+          stars[v - 1].focus();
+        }
+      });
+    });
+    // Make first star Tab-reachable before any rating is set
+    stars[0].tabIndex = 0;
+
+    // ---------- Recommendation buttons ----------
+    const choices = Array.from(document.querySelectorAll('.choice'));
+    const recommendInput = document.getElementById('recommend');
+    choices.forEach(c => {
+      c.addEventListener('click', () => {
+        choices.forEach(other => {
+          other.classList.remove('active');
+          other.setAttribute('aria-checked', 'false');
+        });
+        c.classList.add('active');
+        c.setAttribute('aria-checked', 'true');
+        recommendInput.value = c.dataset.value;
+      });
+    });
+
+    // ---------- Form submit ----------
+    const form = document.getElementById('feedback-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorMsg = document.getElementById('error-msg');
+    const formView = document.getElementById('form-view');
+    const thanksView = document.getElementById('thanks-view');
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.hidden = false;
+      errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function clearError() {
+      errorMsg.hidden = true;
+      errorMsg.textContent = '';
+    }
+
+    function validate() {
+      clearError();
+      const missing = [];
+      if (!ratingInput.value) missing.push('a star rating');
+      if (!recommendInput.value) missing.push('a recommendation');
+      if (!document.getElementById('shifted').value.trim()) missing.push('what shifted for you');
+      if (!document.getElementById('valuable').value.trim()) missing.push('what was most valuable');
+
+      if (missing.length) {
+        showError('A couple things still need a moment: ' + missing.join(', ') + '.');
+        return false;
+      }
+      return true;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Honeypot: silently drop spam and show the success state
+      if (document.getElementById('hp').value.trim() !== '') {
+        formView.style.display = 'none';
+        thanksView.classList.add('show');
+        return;
+      }
+
+      if (!validate()) return;
+
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Sending';
+
+      try {
+        const data = new FormData(form);
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          formView.style.display = 'none';
+          thanksView.classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const result = await response.json().catch(() => ({}));
+          const errText = (result.errors && result.errors[0] && result.errors[0].message)
+            || 'Something went sideways. Please try sending again in a moment.';
+          showError(errText);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      } catch (err) {
+        showError('Could not reach the server. Check your connection and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  </script>
+</body>
+</html>
